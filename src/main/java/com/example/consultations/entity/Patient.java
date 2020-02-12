@@ -1,8 +1,17 @@
 package com.example.consultations.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
+@Entity
 public class Patient {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String lastName;
 
     private String name;
@@ -14,6 +23,9 @@ public class Patient {
     private String gender;
 
     private String socialSecurityNumber;
+
+    public Patient() {
+    }
 
     public Patient(String lastName, String name, Date dateOfBirth, String gender, String socialSecurityNumber) {
         this.lastName = lastName;

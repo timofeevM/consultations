@@ -1,13 +1,27 @@
 package com.example.consultations.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
 public class Consultation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private Date date;
+
     private LocalTime time;
+
     private String symptoms;
+
+    public Consultation() {
+    }
 
     public Consultation(Date date, LocalTime time) {
         this.date = date;
