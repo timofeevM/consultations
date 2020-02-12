@@ -1,10 +1,8 @@
 package com.example.consultations.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Patient {
@@ -23,6 +21,9 @@ public class Patient {
     private String gender;
 
     private String socialSecurityNumber;
+
+    @OneToMany (mappedBy = "patient", fetch = FetchType.LAZY)
+    private List<Consultation> consultations;
 
     public Patient() {
     }

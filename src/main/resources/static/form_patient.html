@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="form_patient.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body ng-app="consultations" ng-controller="consultationsController">
+    <div id="menu" class="rounded-bottom">
+        <button class="btn btn-light btn-sm button_menu">Открыть</button>
+        <button class="btn btn-light btn-sm button_menu">Изменить</button>
+        <button class="btn btn-light btn-sm button_menu">Создать</button>
+        <button class="btn btn-light btn-sm button_menu">Удалить</button>
+    </div>
+    <div>
+        <div class="border rounded" id="table">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Отчество</th>
+                        <th>Дата рождения</th>
+                        <th>Пол</th>
+                        <th>СНИЛС</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in patients" class="patient_table_row">
+                        <th class="patient_table_item">{{item.name}}</th>
+                        <th class="patient_table_item">{{item.lastName}}</th>
+                        <th class="patient_table_item">{{item.middleName}}</th>
+                        <th class="patient_table_item">{{item.dateOfBirth}}</th>
+                        <th class="patient_table_item">{{item.gender}}</th>
+                        <th class="patient_table_item">{{item.socialSecurityNumber}}</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="form_patient.js"></script>
+</body>
+</html>

@@ -1,9 +1,6 @@
 package com.example.consultations.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
@@ -19,6 +16,9 @@ public class Consultation {
     private LocalTime time;
 
     private String symptoms;
+
+    @ManyToOne(optional = false,cascade = CascadeType.ALL)
+    private Patient patient;
 
     public Consultation() {
     }

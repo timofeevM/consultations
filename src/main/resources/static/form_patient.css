@@ -1,0 +1,19 @@
+#table{
+    margin: 25px;
+}
+
+#menu{
+    padding: 15px;
+    background-color: #84c3be;
+}
+
+.button_menu{
+    margin-right: 20px;
+}
+
+.patient_table_item{
+    font-weight: initial;
+}
+.patient_table_row:hover{
+    background-color: #84c3be;
+}
