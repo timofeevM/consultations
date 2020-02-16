@@ -8,4 +8,5 @@ import java.util.List;
 public interface PatientService {
     List<Patient> getAllPatients();
     void savePatient(Patient patient);
+    Patient getPatientById(Long id);
 }

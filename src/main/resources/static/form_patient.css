@@ -1,5 +1,11 @@
 #table{
+    text-align: center;
     margin: 25px;
+}
+
+.selected_patient{
+    background-color: #669c97;
+    color: white;
 }
 
 #menu{
@@ -8,6 +14,11 @@
 }
 
 #buttonCreateSave{
+    background-color: #84c3be;
+    margin-left: 600px;
+}
+
+#buttonEditSave{
     background-color: #84c3be;
     margin-left: 600px;
 }
@@ -33,7 +44,6 @@
 }
 
 .ng-modal-overlay {
-    /* полупорозрачный DIV, который охватывает весь экран */
     position:absolute;
     z-index:9999;
     top:0;

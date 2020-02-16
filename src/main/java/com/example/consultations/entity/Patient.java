@@ -86,6 +86,11 @@ public class Patient {
     public void setSocialSecurityNumber(String socialSecurityNumber) {
         this.socialSecurityNumber = socialSecurityNumber;
     }
+
+    public Long getId() {
+        return id;
+    }
+
     public boolean validPatient(){
         String regex = "^[А-Я][а-я]+$";
 

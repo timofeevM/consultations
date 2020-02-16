@@ -22,4 +22,9 @@ public class PatientServiceImpl implements PatientService {
     public void savePatient(Patient patient) {
         patientDao.save(patient);
     }
+
+    @Override
+    public Patient getPatientById(Long id) {
+        return patientDao.findById(id).get();
+    }
 }
