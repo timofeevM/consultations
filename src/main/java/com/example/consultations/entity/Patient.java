@@ -1,8 +1,12 @@
 package com.example.consultations.entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity
 public class Patient {
@@ -16,22 +20,21 @@ public class Patient {
 
     private String middleName;
 
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     private String gender;
 
     private String socialSecurityNumber;
 
-    @OneToMany (mappedBy = "patient", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     private List<Consultation> consultations;
 
     public Patient() {
     }
 
-    public Patient(String lastName, String name, Date dateOfBirth, String gender, String socialSecurityNumber) {
+    public Patient(String lastName, String name, String dateOfBirth, String gender, String socialSecurityNumber) {
         this.lastName = lastName;
         this.name = name;
-        this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.socialSecurityNumber = socialSecurityNumber;
     }
@@ -60,12 +63,12 @@ public class Patient {
         this.middleName = middleName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+        this.dateOfBirth = dateOfBirth.toLocalDate().plusDays(1);
     }
 
     public String getGender() {
@@ -82,5 +85,45 @@ public class Patient {
 
     public void setSocialSecurityNumber(String socialSecurityNumber) {
         this.socialSecurityNumber = socialSecurityNumber;
+    }
+    public boolean validPatient(){
+        String regex = "^[А-Я][а-я]+$";
+
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcherName = pattern.matcher(getName());
+        Matcher matcherLastName = pattern.matcher(getLastName());
+        Matcher matcherMiddleName = pattern.matcher(getMiddleName());
+
+        return matcherName.find()&&matcherLastName.find()&&
+                (matcherMiddleName.find()||getLastName()==null||getLastName().equals(""))&&
+                isValidSsn()&&dateValid()&&(getGender().equals("Мужской")||getGender().equals("Женский"));
+    }
+
+    private boolean isValidSsn(){
+        char [] ssn = getSocialSecurityNumber().toCharArray();
+
+        String regex = "^[0-9]{11}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(getSocialSecurityNumber());
+        if (matcher.find()){
+            int checkSum = Integer.parseInt(ssn[9]+""+ssn[10]);
+            int sum = 0;
+            int y = 0;
+            for (int i = 9;i>0;i--){
+                sum+=Integer.parseInt(String.valueOf(ssn[y]))*i;
+                y++;
+            }
+            if(sum < 100 && sum == checkSum){
+                return true;
+            }else if((sum == 100 || sum == 101) && checkSum == 0){
+                return true;
+            }else return sum > 101 && (sum % 101 == checkSum || (sum % 101 == 100 && checkSum == 0));
+        }else {return false;}
+    }
+
+    private boolean dateValid(){
+        LocalDate todayDate = (new java.util.Date()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return getDateOfBirth().isBefore(todayDate);
     }
 }

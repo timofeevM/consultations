@@ -7,6 +7,20 @@
     background-color: #84c3be;
 }
 
+#buttonCreateSave{
+    background-color: #84c3be;
+    margin-left: 600px;
+}
+
+.divCreate{
+    margin: 25px;
+}
+
+.createLabel{
+    font-weight: bold;
+    margin-left: 15px;
+}
+
 .button_menu{
     margin-right: 20px;
 }
@@ -16,4 +30,61 @@
 }
 .patient_table_row:hover{
     background-color: #84c3be;
+}
+
+.ng-modal-overlay {
+    /* полупорозрачный DIV, который охватывает весь экран */
+    position:absolute;
+    z-index:9999;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:#000000;
+    opacity: 0.8;
+}
+.ng-modal-dialog {
+    /* Отцентрированный даилог с тенью */
+    z-index:10000;
+    position: absolute;
+    width: 50%;
+
+    /* Центрирование */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+
+    background-color: #fff;
+    box-shadow: 4px 4px 80px #000;
+}
+.ng-modal-dialog-content {
+    padding:10px;
+    text-align: left;
+}
+.ng-modal-close {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 120%;
+    display: inline-block;
+    font-weight: bold;
+    font-family: 'arial', 'sans-serif';
+}
+#divTable{
+    position: absolute;
+    width: 100%;
+    height: 93%;
+    overflow: auto
+}
+#divError{
+    text-align: center;
+    margin-top: 30px
+}
+#divSuccess{
+    text-align: center;
+    margin-top: 30px
 }

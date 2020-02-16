@@ -17,4 +17,9 @@ public class PatientServiceImpl implements PatientService {
     public List<Patient> getAllPatients() {
         return patientDao.findAll();
     }
+
+    @Override
+    public void savePatient(Patient patient) {
+        patientDao.save(patient);
+    }
 }
