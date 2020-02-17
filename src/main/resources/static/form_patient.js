@@ -73,6 +73,27 @@ app.controller("consultationsController", function ($scope, $http) {
         }
     };
 
+    $scope.deletePatient = function(){
+        $http({
+            method: 'POST',
+            url: 'http://localhost:8080/deletePatient',
+            headers: {'Content-Type': 'application/json'},
+            data: ({
+                'id': selectedPatient
+            })
+        }).then(function (result) {
+            if (result.data === true) {
+                window.location.reload(true);
+                alert("Пациент успешно удален");
+                document.getElementById(selectedPatient).classList.remove('selected_patient');
+                $scope.disabledPatientButtons = true;
+                selectedPatient = null;
+            } else {
+                alert("Произошла ошибка, пациент не удален");
+            }
+        });
+    };
+
     $scope.editModal = function () {
         $scope.modalEditShown = !$scope.modalEditShown;
         $http.get('http://localhost:8080/editPatient?id=' + selectedPatient).then(function (patient) {

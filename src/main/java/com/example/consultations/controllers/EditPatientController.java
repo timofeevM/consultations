@@ -8,24 +8,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 public class EditPatientController {
     @Autowired
     PatientService patientService;
 
     @GetMapping("/editPatient")
-    public Patient getEditPatientController(Long id){
+    public Patient getEditPatientController(Long id) {
         return patientService.getPatientById(id);
     }
 
     @PostMapping("/editPatient")
     public Boolean addPatientController(@RequestBody Patient editPatient) {
-        if (editPatient.validPatient()){
+        if (editPatient.validPatient()) {
             patientService.savePatient(editPatient);
             return true;
-        }else {
+        } else {
             return false;
         }
     }
