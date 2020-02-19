@@ -1,138 +1,103 @@
-#table{
+@import "modal_window.css";
+
+#table {
     text-align: center;
     margin: 25px;
 }
 
-.selected_patient{
+.selected_patient {
     background-color: #669c97;
     color: white;
 }
 
-.open_modal_label{
+.open_modal_label {
     font-size: 22px;
     color: #669c97;
 }
-.open_modal_div_label{
+
+.open_modal_div_label {
     display: inline-grid;
     margin: 10px 100px 10px 10px;
 }
 
-.open_modal_div{
+.open_modal_div {
     margin: 10px 10px 10px 10px;
 }
 
-#consultation_div{
+#consultation_div {
     margin-top: 50px;
 }
 
-#open_modal_div_button{
+#open_modal_div_button {
     background-color: #84c3be;
     padding: 10px;
     margin-bottom: 5px;
 }
-#open_modal_table_div{
+
+#open_modal_table_div {
     width: 100%;
     max-height: 350px;
     overflow: auto;
 }
 
-#menu{
+#menu {
     padding: 15px;
     background-color: #84c3be;
 }
 
-#buttonCreateSave{
+#buttonCreateSave {
     background-color: #84c3be;
     margin-left: 600px;
 }
 
-#buttonCreateConsultationSave{
+#buttonCreateConsultationSave {
     background-color: #84c3be;
     margin-left: 600px;
 }
 
-#buttonEditConsultationSave{
+#buttonEditConsultationSave {
     background-color: #84c3be;
     margin-left: 600px;
 }
 
-#buttonEditSave{
+#buttonEditSave {
     background-color: #84c3be;
     margin-left: 600px;
 }
 
-#searchDiv{
+#searchDiv {
     position: absolute;
     display: flex;
     right: 5px;
     top: 12px;
 }
-#searchSelect{
+
+#searchSelect {
     width: fit-content;
 }
 
-.divCreate{
+.divCreate {
     margin: 25px;
 }
 
-.createLabel{
+.createLabel {
     font-weight: bold;
     margin-left: 15px;
 }
 
-.button_menu{
+.button_menu {
     margin-right: 20px;
 }
 
-.patient_table_item{
+.patient_table_item {
     font-weight: initial;
 }
-.patient_table_row:hover{
+
+.patient_table_row:hover {
     background-color: #84c3be;
 }
 
-.ng-modal-overlay {
-    position:absolute;
-    z-index:9999;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background-color:#000000;
-    opacity: 0.8;
-}
-.ng-modal-dialog {
-    /* Отцентрированный даилог с тенью */
-    z-index:10000;
-    position: absolute;
-    width: 50%;
-
-    /* Центрирование */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-
-    background-color: #fff;
-    box-shadow: 4px 4px 80px #000;
-}
-.ng-modal-dialog-content {
-    padding:10px;
-    text-align: left;
-}
-.ng-modal-close {
-    position: absolute;
-    top: 3px;
-    right: 5px;
-    padding: 5px;
-    cursor: pointer;
-    font-size: 120%;
-    display: inline-block;
-    font-weight: bold;
-    font-family: 'arial', 'sans-serif';
-}
-#divTable{
+#divTable {
     position: absolute;
     width: 100%;
     height: 93%;

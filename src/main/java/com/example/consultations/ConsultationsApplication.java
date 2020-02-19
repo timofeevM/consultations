@@ -1,7 +1,5 @@
 package com.example.consultations;
 
-import com.example.consultations.services.PatientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
@@ -16,7 +14,7 @@ public class ConsultationsApplication {
     }
 
     @GetMapping("/")
-    public String getMain(){
+    public String getMain() {
         return "form_patient.html";
     }
 }

@@ -41,10 +41,10 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     @Override
     public boolean edit(Consultation consultation) {
-        if (getConsultationById(consultation.getId())!=null){
+        if (getConsultationById(consultation.getId()) != null) {
             save(consultation);
             return true;
-        }else {
+        } else {
             return false;
         }
     }

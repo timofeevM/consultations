@@ -35,10 +35,10 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public boolean edit(Patient patient) {
-        if (getPatientById(patient.getId())!=null){
+        if (getPatientById(patient.getId()) != null) {
             savePatient(patient);
             return true;
-        }else {
+        } else {
             return false;
         }
     }

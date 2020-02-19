@@ -16,7 +16,8 @@
     <button class="btn btn-light btn-sm button_menu" ng-disabled="disabledPatientButtons" ng-click="editModal()">
         Изменить
     </button>
-    <button class="btn btn-light btn-sm button_menu" ng-disabled="disabledPatientButtons" ng-click="deleteConfirmPatient()">
+    <button class="btn btn-light btn-sm button_menu" ng-disabled="disabledPatientButtons"
+            ng-click="deleteConfirmPatient()">
         Удалить
     </button>
     <div id="searchDiv">
@@ -41,7 +42,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in patients | filter:mySearch" class="patient_table_row" ng-click="clickPatient(item.id)" id="{{item.id}}">
+            <tr ng-repeat="item in patients | filter:mySearch" class="patient_table_row"
+                ng-click="clickPatient(item.id)" id="{{item.id}}">
                 <th class="patient_table_item">{{item.lastName}}</th>
                 <th class="patient_table_item">{{item.name}}</th>
                 <th class="patient_table_item">{{item.middleName}}</th>
@@ -57,15 +59,18 @@
     <form>
         <div class="divCreate">
             <label class="createLabel" for="lastName">Фамилия*</label>
-            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной" ng-model="lastName" id="lastName" type="text">
+            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной"
+                   ng-model="lastName" id="lastName" type="text">
         </div>
         <div class="divCreate">
             <label class="createLabel" for="name">Имя*</label>
-            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной" ng-model="name" id="name" type="text">
+            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной" ng-model="name"
+                   id="name" type="text">
         </div>
         <div class="divCreate">
             <label class="createLabel" for="middleName">Отчество</label>
-            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной" ng-model="middleName" name="middleName" id="middleName" type="text">
+            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной"
+                   ng-model="middleName" name="middleName" id="middleName" type="text">
         </div>
         <div class="divCreate">
             <label class="createLabel" for="dateOfBirth">Дата рождения*</label>
@@ -80,7 +85,8 @@
         </div>
         <div class="divCreate">
             <label class="createLabel" for="socialSecurityNumber">Снилс*</label>
-            <input class="form-control" title="Необходимо писать без разделителей, только цифры" ng-model="socialSecurityNumber" id="socialSecurityNumber" type="text">
+            <input class="form-control" title="Необходимо писать без разделителей, только цифры"
+                   ng-model="socialSecurityNumber" id="socialSecurityNumber" type="text">
         </div>
         <input type="submit" ng-click="createPatient(name,lastName,middleName,date,gender,socialSecurityNumber)"
                value="Сохранить" id="buttonCreateSave" class="btn btn-light">
@@ -91,15 +97,18 @@
     <form>
         <div class="divCreate">
             <label class="createLabel" for="editLastName">Фамилия*</label>
-            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной" ng-model="editLastName" id="editLastName" type="text">
+            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной"
+                   ng-model="editLastName" id="editLastName" type="text">
         </div>
         <div class="divCreate">
             <label class="createLabel" for="editName">Имя*</label>
-            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной" ng-model="editName" id="editName" type="text">
+            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной"
+                   ng-model="editName" id="editName" type="text">
         </div>
         <div class="divCreate">
             <label class="createLabel" for="editMiddleName">Отчество</label>
-            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной" ng-model="editMiddleName" name="middleName" id="editMiddleName" type="text">
+            <input class="form-control" title="Необходимо писать русскими буквами, начиная с заглавной"
+                   ng-model="editMiddleName" name="middleName" id="editMiddleName" type="text">
         </div>
         <div class="divCreate">
             <label class="createLabel" for="editDateOfBirth">Дата рождения*</label>
@@ -114,7 +123,8 @@
         </div>
         <div class="divCreate">
             <label class="createLabel" for="editSocialSecurityNumber">Снилс*</label>
-            <input class="form-control" title="Необходимо писать без разделителей, только цифры" ng-model="editSocialSecurityNumber" id="editSocialSecurityNumber" type="text">
+            <input class="form-control" title="Необходимо писать без разделителей, только цифры"
+                   ng-model="editSocialSecurityNumber" id="editSocialSecurityNumber" type="text">
         </div>
         <input type="submit"
                ng-click="editPatient(editName,editLastName,editMiddleName,editDate,editGender,editSocialSecurityNumber)"
@@ -145,10 +155,12 @@
             <button class="btn btn-light btn-sm button_menu" ng-click="createConsultationModal()">
                 Создать
             </button>
-            <button ng-disabled="disabledConsultationButtons" ng-click="editConsultationModal()" class="btn btn-light btn-sm button_menu">
+            <button ng-disabled="disabledConsultationButtons" ng-click="editConsultationModal()"
+                    class="btn btn-light btn-sm button_menu">
                 Изменить
             </button>
-            <button ng-disabled="disabledConsultationButtons" ng-click="deleteConfirmConsultation()" class="btn btn-light btn-sm button_menu">
+            <button ng-disabled="disabledConsultationButtons" ng-click="deleteConfirmConsultation()"
+                    class="btn btn-light btn-sm button_menu">
                 Удалить
             </button>
         </div>
@@ -163,7 +175,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="consultation in consultations" id="{{consultation.id}}" ng-click="clickConsultation(consultation.id)" class="patient_table_row">
+                    <tr ng-repeat="consultation in consultations" id="{{consultation.id}}"
+                        ng-click="clickConsultation(consultation.id)" class="patient_table_row">
                         <th class="patient_table_item">{{consultation.date | date:'dd.MM.yyyy'}}</th>
                         <th class="patient_table_item">{{consultation.time | date:'HH:mm'}}</th>
                         <th class="patient_table_item">{{consultation.symptoms}}</th>
@@ -196,7 +209,8 @@
     <form>
         <div class="divCreate">
             <label class="createLabel" for="consultationEditDate">Дата*</label>
-            <input class="form-control" max="2100-12-31" ng-model="consultationEditDate" id="consultationEditDate" type="date">
+            <input class="form-control" max="2100-12-31" ng-model="consultationEditDate" id="consultationEditDate"
+                   type="date">
         </div>
         <div class="divCreate">
             <label class="createLabel" for="consultationEditTime">Время*</label>
@@ -206,7 +220,8 @@
             <label class="createLabel" for="consultationEditSymptoms">Симптомы</label>
             <input class="form-control" ng-model="consultationEditSymptoms" id="consultationEditSymptoms" type="text">
         </div>
-        <input type="submit" ng-click="editConsultation(consultationEditDate,consultationEditTime,consultationEditSymptoms)"
+        <input type="submit"
+               ng-click="editConsultation(consultationEditDate,consultationEditTime,consultationEditSymptoms)"
                id="buttonEditConsultationSave" value="Сохранить" class="btn btn-light">
     </form>
 </modal-dialog>

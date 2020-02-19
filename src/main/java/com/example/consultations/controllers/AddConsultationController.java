@@ -1,7 +1,6 @@
 package com.example.consultations.controllers;
 
 import com.example.consultations.entity.Consultation;
-import com.example.consultations.entity.Patient;
 import com.example.consultations.services.ConsultationService;
 import com.example.consultations.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +24,11 @@ public class AddConsultationController {
     }
 
     @PostMapping("/addConsultation")
-    public boolean addConsultationController(@RequestBody Consultation consultation){
+    public boolean addConsultationController(@RequestBody Consultation consultation) {
         if (consultation.validConsultation()) {
             consultationService.save(consultation);
             return true;
-        }else {
+        } else {
             return false;
         }
     }

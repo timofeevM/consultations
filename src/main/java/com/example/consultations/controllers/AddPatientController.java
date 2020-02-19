@@ -15,10 +15,10 @@ public class AddPatientController {
 
     @PostMapping("/addPatient")
     public Boolean addPatientController(@RequestBody Patient patient) {
-        if (patient.validPatient()){
+        if (patient.validPatient()) {
             patientService.savePatient(patient);
             return true;
-        }else {
+        } else {
             return false;
         }
     }

@@ -77,6 +77,6 @@ public class Consultation {
     }
 
     public boolean validConsultation() {
-        return this.date!=null&&this.time!=null;
+        return this.date != null && this.time != null;
     }
 }

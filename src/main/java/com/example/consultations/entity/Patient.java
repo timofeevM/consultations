@@ -1,12 +1,11 @@
 package com.example.consultations.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -122,10 +121,10 @@ public class Patient {
     }
 
     private boolean dateValid() {
-        if (this.dateOfBirth!=null){
+        if (this.dateOfBirth != null) {
             Date todayDate = new Date(Calendar.getInstance().getTime().getTime());
             return this.dateOfBirth.before(todayDate);
-        }else {
+        } else {
             return false;
         }
 
