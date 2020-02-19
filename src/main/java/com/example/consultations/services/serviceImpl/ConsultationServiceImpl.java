@@ -38,4 +38,14 @@ public class ConsultationServiceImpl implements ConsultationService {
     public void save(Consultation consultation) {
         consultationDao.save(consultation);
     }
+
+    @Override
+    public boolean edit(Consultation consultation) {
+        if (getConsultationById(consultation.getId())!=null){
+            save(consultation);
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

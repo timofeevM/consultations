@@ -25,11 +25,21 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient getPatientById(Long id) {
-        return patientDao.findById(id).get();
+        return patientDao.findById(id).orElse(null);
     }
 
     @Override
     public void deletePatient(Patient patient) {
         patientDao.delete(patient);
+    }
+
+    @Override
+    public boolean edit(Patient patient) {
+        if (getPatientById(patient.getId())!=null){
+            savePatient(patient);
+            return true;
+        }else {
+            return false;
+        }
     }
 }

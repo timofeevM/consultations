@@ -15,8 +15,7 @@ public class EditPatientController {
     @PostMapping("/editPatient")
     public Boolean editPatientController(@RequestBody Patient editPatient) {
         if (editPatient.validPatient()) {
-            patientService.savePatient(editPatient);
-            return true;
+            return patientService.edit(editPatient);
         } else {
             return false;
         }

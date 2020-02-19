@@ -18,8 +18,12 @@ public class DeletePatientController {
     @PostMapping("/deletePatient")
     public Boolean deletePatientController(@RequestBody Patient patient) {
         Patient deletePatient = patientService.getPatientById(patient.getId());
-        consultationService.deleteAll(consultationService.getConsultationsByPatient(deletePatient));
-        patientService.deletePatient(patient);
-        return true;
+        if (deletePatient!=null){
+            consultationService.deleteAll(consultationService.getConsultationsByPatient(deletePatient));
+            patientService.deletePatient(patient);
+            return true;
+        }else {
+            return false;
+        }
     }
 }

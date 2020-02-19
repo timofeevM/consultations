@@ -10,4 +10,5 @@ public interface PatientService {
     void savePatient(Patient patient);
     Patient getPatientById(Long id);
     void deletePatient(Patient patient);
+    boolean edit(Patient patient);
 }

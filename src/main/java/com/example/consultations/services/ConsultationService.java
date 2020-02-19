@@ -11,4 +11,5 @@ public interface ConsultationService {
     void deleteConsultation(Consultation consultation);
     Consultation getConsultationById(Long id);
     void save(Consultation consultation);
+    boolean edit(Consultation consultation);
 }
