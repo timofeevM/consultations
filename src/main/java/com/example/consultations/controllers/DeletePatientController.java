@@ -1,6 +1,7 @@
 package com.example.consultations.controllers;
 
 import com.example.consultations.entity.Patient;
+import com.example.consultations.services.ConsultationService;
 import com.example.consultations.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,9 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class DeletePatientController {
     @Autowired
     PatientService patientService;
+    @Autowired
+    ConsultationService consultationService;
 
     @PostMapping("/deletePatient")
     public Boolean deletePatientController(@RequestBody Patient patient) {
+        Patient deletePatient = patientService.getPatientById(patient.getId());
+        consultationService.deleteAll(consultationService.getConsultationsByPatient(deletePatient));
         patientService.deletePatient(patient);
         return true;
     }

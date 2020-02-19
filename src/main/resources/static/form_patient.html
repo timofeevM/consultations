@@ -2,109 +2,210 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Приложение "Консультации"</title>
     <link rel="stylesheet" href="form_patient.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body ng-app="consultations" ng-controller="consultationsController" style="overflow: hidden">
-    <div id="menu" class="rounded-bottom">
-        <button class="btn btn-light btn-sm button_menu" ng-disabled="disabledPatientButtons">Открыть</button>
-        <button class="btn btn-light btn-sm button_menu" ng-disabled="disabledPatientButtons" ng-click="editModal()">Изменить</button>
-        <button class="btn btn-light btn-sm button_menu" ng-click="createModal()">Создать</button>
-        <button class="btn btn-light btn-sm button_menu" ng-disabled="disabledPatientButtons" ng-click="deletePatient()">Удалить</button>
+<div id="menu" class="border-bottom shadow-sm">
+    <button class="btn btn-sm button_menu" ng-click="createModal()">Создать</button>
+    <button class="btn btn-light btn-sm button_menu" ng-disabled="disabledPatientButtons" ng-click="openModal()">
+        Открыть
+    </button>
+    <button class="btn btn-light btn-sm button_menu" ng-disabled="disabledPatientButtons" ng-click="editModal()">
+        Изменить
+    </button>
+    <button class="btn btn-light btn-sm button_menu" ng-disabled="disabledPatientButtons" ng-click="deletePatient()">
+        Удалить
+    </button>
+</div>
+<div id="divTable">
+    <div class="border rounded" id="table">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Дата рождения</th>
+                <th>Пол</th>
+                <th>СНИЛС</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in patients" class="patient_table_row" ng-click="clickPatient(item.id)" id="{{item.id}}">
+                <th class="patient_table_item">{{item.lastName}}</th>
+                <th class="patient_table_item">{{item.name}}</th>
+                <th class="patient_table_item">{{item.middleName}}</th>
+                <th class="patient_table_item">{{item.dateOfBirth}}</th>
+                <th class="patient_table_item">{{item.gender}}</th>
+                <th class="patient_table_item">{{item.socialSecurityNumber}}</th>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <div id="divTable">
-        <div class="border rounded" id="table">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Имя</th>
-                        <th>Фамилия</th>
-                        <th>Отчество</th>
-                        <th>Дата рождения</th>
-                        <th>Пол</th>
-                        <th>СНИЛС</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in patients" class="patient_table_row" ng-click="clickPatient(item.id)" id="{{item.id}}">
-                        <th class="patient_table_item">{{item.name}}</th>
-                        <th class="patient_table_item">{{item.lastName}}</th>
-                        <th class="patient_table_item">{{item.middleName}}</th>
-                        <th class="patient_table_item">{{item.dateOfBirth}}</th>
-                        <th class="patient_table_item">{{item.gender}}</th>
-                        <th class="patient_table_item">{{item.socialSecurityNumber}}</th>
-                    </tr>
-                </tbody>
-            </table>
+</div>
+<modal-dialog show='createModalShown' width='750px' height='auto'>
+    <form>
+        <div class="divCreate">
+            <label class="createLabel" for="lastName">Фамилия</label>
+            <input class="form-control" ng-model="lastName" id="lastName" type="text">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="name">Имя</label>
+            <input class="form-control" ng-model="name" id="name" type="text">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="middleName">Отчество</label>
+            <input class="form-control" ng-model="middleName" name="middleName" id="middleName" type="text">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="dateOfBirth">Дата рождения</label>
+            <input class="form-control" ng-model="date" id="dateOfBirth" type="date">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="gender">Пол</label>
+            <select name="gender" id="gender" class="form-control" ng-model="gender">
+                <option value="Мужской">Мужской</option>
+                <option value="Женский">Женский</option>
+            </select>
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="socialSecurityNumber">Снилс</label>
+            <input class="form-control" ng-model="socialSecurityNumber" id="socialSecurityNumber" type="text">
+        </div>
+        <input type="submit" ng-click="createPatient(name,lastName,middleName,date,gender,socialSecurityNumber)"
+               value="Сохранить" id="buttonCreateSave" class="btn btn-light">
+    </form>
+</modal-dialog>
+
+<modal-dialog show='editModalShown' width='750px' height='auto'>
+    <form>
+        <div class="divCreate">
+            <label class="createLabel" for="editLastName">Фамилия</label>
+            <input class="form-control" ng-model="editLastName" id="editLastName" type="text">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="editName">Имя</label>
+            <input class="form-control" ng-model="editName" id="editName" type="text">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="editMiddleName">Отчество</label>
+            <input class="form-control" ng-model="editMiddleName" name="middleName" id="editMiddleName" type="text">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="editDateOfBirth">Дата рождения</label>
+            <input class="form-control" ng-model="editDate" id="editDateOfBirth" type="date">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="editGender">Пол</label>
+            <select name="editGender" id="editGender" class="form-control" ng-model="editGender">
+                <option value="Мужской">Мужской</option>
+                <option value="Женский">Женский</option>
+            </select>
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="editSocialSecurityNumber">Снилс</label>
+            <input class="form-control" ng-model="editSocialSecurityNumber" id="editSocialSecurityNumber" type="text">
+        </div>
+        <input type="submit"
+               ng-click="editPatient(editName,editLastName,editMiddleName,editDate,editGender,editSocialSecurityNumber)"
+               value="Изменить" id="buttonEditSave" class="btn btn-light">
+    </form>
+</modal-dialog>
+
+<modal-dialog show='openModalShown' width='750px' height='auto'>
+    <div class="open_modal_div">
+        <label class="open_modal_label"><b>Пациент #{{openId}}</b></label>
+        <div class="border rounded">
+            <div class="open_modal_div_label">
+                <label><b>Фамилия:</b> {{openLastName}}</label>
+                <label><b>Имя:</b> {{openName}}</label>
+                <label><b>Отчество:</b> {{openMiddleName}}</label>
+
+            </div>
+            <div class="open_modal_div_label">
+                <label><b>Дата рождения:</b> {{openDate}}</label>
+                <label><b>Пол:</b> {{openGender}}</label>
+                <label><b>Cнилс:</b> {{openSocialSecurityNumber}}</label>
+            </div>
         </div>
     </div>
-    <modal-dialog show='createModalShown' width='750px' height='auto'>
-        <form>
-            <div class="divCreate">
-                <label class="createLabel" for="name">Имя</label>
-                <input class="form-control" ng-model="name" id="name" type="text">
+    <div class="open_modal_div" id="consultation_div">
+        <label class="open_modal_label"><b>Консультации</b></label>
+        <div id="open_modal_div_button">
+            <button class="btn btn-light btn-sm button_menu" ng-click="createConsultationModal()">
+                Создать
+            </button>
+            <button ng-disabled="disabledConsultationButtons" ng-click="editConsultationModal()" class="btn btn-light btn-sm button_menu">
+                Изменить
+            </button>
+            <button ng-disabled="disabledConsultationButtons" ng-click="deleteConsultation()" class="btn btn-light btn-sm button_menu">
+                Удалить
+            </button>
+        </div>
+        <div id="open_modal_table_div">
+            <div class="border rounded">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Время</th>
+                        <th>Симптомы</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="consultation in consultations" id="{{consultation.id}}" ng-click="clickConsultation(consultation.id)" class="patient_table_row">
+                        <th class="patient_table_item">{{consultation.date}}</th>
+                        <th class="patient_table_item">{{consultation.time}}</th>
+                        <th class="patient_table_item">{{consultation.symptoms}}</th>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="divCreate">
-                <label class="createLabel" for="lastName">Фамилия</label>
-                <input class="form-control" ng-model="lastName" id="lastName" type="text">
-            </div>
-            <div class="divCreate">
-                <label class="createLabel" for="middleName">Отчество</label>
-                <input class="form-control" ng-model="middleName" name="middleName" id="middleName" type="text">
-            </div>
-            <div class="divCreate">
-                <label class="createLabel" for="dateOfBirth">Дата рождения</label>
-                <input class="form-control" ng-model="date" id="dateOfBirth" type="date">
-            </div>
-            <div class="divCreate">
-                <label class="createLabel" for="gender">Пол</label>
-                <select name="gender" id="gender" class="form-control" ng-model="gender">
-                    <option value="Мужской">Мужской</option>
-                    <option value="Женский">Женский</option>
-                </select>
-            </div>
-            <div class="divCreate">
-                <label class="createLabel" for="socialSecurityNumber">Снилс</label>
-                <input class="form-control" ng-model="socialSecurityNumber" id="socialSecurityNumber" type="text">
-            </div>
-            <input type="submit" ng-click="createPatient(name,lastName,middleName,date,gender,socialSecurityNumber)" value="Сохранить" id="buttonCreateSave" class="btn btn-light">
-        </form>
-    </modal-dialog>
-    <modal-dialog show='modalEditShown' width='750px' height='auto'>
-        <form>
-            <div class="divCreate">
-                <label class="createLabel" for="editName">Имя</label>
-                <input class="form-control" ng-model="editName" id="editName" type="text">
-            </div>
-            <div class="divCreate">
-                <label class="createLabel" for="editLastName">Фамилия</label>
-                <input class="form-control" ng-model="editLastName" id="editLastName" type="text">
-            </div>
-            <div class="divCreate">
-                <label class="createLabel" for="editMiddleName">Отчество</label>
-                <input class="form-control" ng-model="editMiddleName" name="middleName" id="editMiddleName" type="text">
-            </div>
-            <div class="divCreate">
-                <label class="createLabel" for="editDateOfBirth">Дата рождения</label>
-                <input class="form-control" ng-model="editDate" id="editDateOfBirth" type="date">
-            </div>
-            <div class="divCreate">
-                <label class="createLabel" for="editGender">Пол</label>
-                <select name="editGender" id="editGender" class="form-control" ng-model="editGender">
-                    <option value="Мужской">Мужской</option>
-                    <option value="Женский">Женский</option>
-                </select>
-            </div>
-            <div class="divCreate">
-                <label class="createLabel" for="editSocialSecurityNumber">Снилс</label>
-                <input class="form-control" ng-model="editSocialSecurityNumber" id="editSocialSecurityNumber" type="text">
-            </div>
-            <input type="submit" ng-click="editPatient(editName,editLastName,editMiddleName,editDate,editGender,editSocialSecurityNumber)" value="Изменить" id="buttonEditSave" class="btn btn-light">
-        </form>
-    </modal-dialog>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-    <script src="form_patient.js"></script>
+        </div>
+    </div>
+</modal-dialog>
+<modal-dialog show='createConsultationModalShown' width='750px' height='auto'>
+    <form>
+        <div class="divCreate">
+            <label class="createLabel" for="consultationDate">Дата</label>
+            <input class="form-control" max="2100-12-31" ng-model="consultationDate" id="consultationDate" type="date">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="consultationTime">Время</label>
+            <input class="form-control" ng-model="consultationTime" id="consultationTime" type="time">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="consultationSymptoms">Симптомы</label>
+            <input class="form-control" ng-model="consultationSymptoms" id="consultationSymptoms" type="text">
+        </div>
+        <input type="submit" ng-click="createConsultation(consultationDate,consultationTime,consultationSymptoms)"
+               id="buttonCreateConsultationSave" value="Сохранить" class="btn btn-light">
+    </form>
+</modal-dialog>
+<modal-dialog show='editConsultationModalShown' width='750px' height='auto'>
+    <form>
+        <div class="divCreate">
+            <label class="createLabel" for="consultationEditDate">Дата</label>
+            <input class="form-control" max="2100-12-31" ng-model="consultationEditDate" id="consultationEditDate" type="date">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="consultationEditTime">Время</label>
+            <input class="form-control" ng-model="consultationEditTime" id="consultationEditTime" type="time">
+        </div>
+        <div class="divCreate">
+            <label class="createLabel" for="consultationEditSymptoms">Симптомы</label>
+            <input class="form-control" ng-model="consultationEditSymptoms" id="consultationEditSymptoms" type="text">
+        </div>
+        <input type="submit" ng-click="editConsultation(consultationEditDate,consultationEditTime,consultationEditSymptoms)"
+               id="buttonEditConsultationSave" value="Сохранить" class="btn btn-light">
+    </form>
+</modal-dialog>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+<script src="form_patient.js"></script>
 </body>
 </html>

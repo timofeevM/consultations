@@ -1,9 +1,11 @@
 package com.example.consultations.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,23 +22,13 @@ public class Patient {
 
     private String middleName;
 
-    private LocalDate dateOfBirth;
+    private Date dateOfBirth;
 
     private String gender;
 
     private String socialSecurityNumber;
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
-    private List<Consultation> consultations;
-
     public Patient() {
-    }
-
-    public Patient(String lastName, String name, String dateOfBirth, String gender, String socialSecurityNumber) {
-        this.lastName = lastName;
-        this.name = name;
-        this.gender = gender;
-        this.socialSecurityNumber = socialSecurityNumber;
     }
 
     public String getLastName() {
@@ -63,12 +55,12 @@ public class Patient {
         this.middleName = middleName;
     }
 
-    public LocalDate getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth.toLocalDate().plusDays(1);
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getGender() {
@@ -91,7 +83,7 @@ public class Patient {
         return id;
     }
 
-    public boolean validPatient(){
+    public boolean validPatient() {
         String regex = "^[А-Я][а-я]+$";
 
         Pattern pattern = Pattern.compile(regex);
@@ -100,35 +92,42 @@ public class Patient {
         Matcher matcherLastName = pattern.matcher(getLastName());
         Matcher matcherMiddleName = pattern.matcher(getMiddleName());
 
-        return matcherName.find()&&matcherLastName.find()&&
-                (matcherMiddleName.find()||getLastName()==null||getLastName().equals(""))&&
-                isValidSsn()&&dateValid()&&(getGender().equals("Мужской")||getGender().equals("Женский"));
+        return matcherName.find() && matcherLastName.find() &&
+                (matcherMiddleName.find() || getMiddleName() == null || getMiddleName().equals("")) &&
+                isValidSsn() && dateValid() && (getGender().equals("Мужской") || getGender().equals("Женский"));
     }
 
-    private boolean isValidSsn(){
-        char [] ssn = getSocialSecurityNumber().toCharArray();
+    private boolean isValidSsn() {
+        char[] ssn = getSocialSecurityNumber().toCharArray();
 
         String regex = "^[0-9]{11}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(getSocialSecurityNumber());
-        if (matcher.find()){
-            int checkSum = Integer.parseInt(ssn[9]+""+ssn[10]);
+        if (matcher.find()) {
+            int checkSum = Integer.parseInt(ssn[9] + "" + ssn[10]);
             int sum = 0;
             int y = 0;
-            for (int i = 9;i>0;i--){
-                sum+=Integer.parseInt(String.valueOf(ssn[y]))*i;
+            for (int i = 9; i > 0; i--) {
+                sum += Integer.parseInt(String.valueOf(ssn[y])) * i;
                 y++;
             }
-            if(sum < 100 && sum == checkSum){
+            if (sum < 100 && sum == checkSum) {
                 return true;
-            }else if((sum == 100 || sum == 101) && checkSum == 0){
+            } else if ((sum == 100 || sum == 101) && checkSum == 0) {
                 return true;
-            }else return sum > 101 && (sum % 101 == checkSum || (sum % 101 == 100 && checkSum == 0));
-        }else {return false;}
+            } else return sum > 101 && (sum % 101 == checkSum || (sum % 101 == 100 && checkSum == 0));
+        } else {
+            return false;
+        }
     }
 
-    private boolean dateValid(){
-        LocalDate todayDate = (new java.util.Date()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return getDateOfBirth().isBefore(todayDate);
+    private boolean dateValid() {
+        if (this.dateOfBirth!=null){
+            Date todayDate = new Date(Calendar.getInstance().getTime().getTime());
+            return this.dateOfBirth.before(todayDate);
+        }else {
+            return false;
+        }
+
     }
 }

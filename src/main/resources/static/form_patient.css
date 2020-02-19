@@ -8,12 +8,45 @@
     color: white;
 }
 
+.open_modal_label{
+    font-size: 22px;
+    color: #669c97;
+}
+.open_modal_div_label{
+    display: inline-grid;
+    margin: 10px 100px 10px 10px;
+}
+
+.open_modal_div{
+    margin: 10px 10px 10px 10px;
+}
+
+#consultation_div{
+    margin-top: 50px;
+}
+
+#open_modal_div_button{
+    background-color: #84c3be;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+#open_modal_table_div{
+    width: 100%;
+    max-height: 350px;
+    overflow: auto;
+}
+
 #menu{
     padding: 15px;
     background-color: #84c3be;
 }
 
 #buttonCreateSave{
+    background-color: #84c3be;
+    margin-left: 600px;
+}
+
+#buttonCreateConsultationSave{
     background-color: #84c3be;
     margin-left: 600px;
 }
@@ -89,12 +122,4 @@
     width: 100%;
     height: 93%;
     overflow: auto
-}
-#divError{
-    text-align: center;
-    margin-top: 30px
-}
-#divSuccess{
-    text-align: center;
-    margin-top: 30px
 }

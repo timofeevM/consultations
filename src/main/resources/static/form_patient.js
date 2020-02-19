@@ -3,13 +3,25 @@ app.controller("consultationsController", function ($scope, $http) {
 
     $scope.patients = [];
 
+    $scope.consultations = [];
+
     $scope.createModalShown = false;
 
-    $scope.modalEditShown = false;
+    $scope.editModalShown = false;
+
+    $scope.openModalShown = false;
+
+    $scope.createConsultationModalShown = false;
+
+    $scope.editConsultationModalShown = false;
 
     $scope.disabledPatientButtons = true;
 
+    $scope.disabledConsultationButtons = true;
+
     let selectedPatient = null;
+
+    let selectedConsultation = null;
 
     $http.get('http://localhost:8080/getAllPatients').then(function (patients) {
         $scope.patients = patients.data;
@@ -34,9 +46,6 @@ app.controller("consultationsController", function ($scope, $http) {
                 if (result.data === true) {
                     window.location.reload(true);
                     alert("Пациент успешно создан");
-                    $http.get('http://localhost:8080/getAllPatients').then(function (patients) {
-                        $scope.patients = patients.data;
-                    });
                 } else {
                     alert("Форма заполнена не корректно");
                 }
@@ -73,7 +82,72 @@ app.controller("consultationsController", function ($scope, $http) {
         }
     };
 
-    $scope.deletePatient = function(){
+    $scope.editConsultation = function (consultationEditDate,consultationEditTime,consultationEditSymptoms) {
+        if (isValidConsultation(consultationEditDate,consultationEditTime,consultationEditSymptoms)) {
+            $http({
+                method: 'POST',
+                url: 'http://localhost:8080/addConsultation',
+                headers: {'Content-Type': 'application/json'},
+                data: ({
+                    'id':selectedConsultation,
+                    'date': consultationEditDate,
+                    'time': consultationEditTime.valueOf(),
+                    'symptoms': consultationEditSymptoms,
+                    'patient': {
+                        'id': selectedPatient
+                    }
+                })
+
+            }).then(function (result) {
+                if (result.data === true) {
+                    $http.get('http://localhost:8080/getConsultations?id=' + selectedPatient).then(function (consultations) {
+                        $scope.consultations = consultations.data;
+                    });
+                    $scope.disabledConsultationButtons = true;
+                    selectedConsultation = null;
+                    $scope.editConsultationModalShown = false;
+                    alert("Консультация изменена")
+                } else {
+                    alert("Форма заполнена не корректно");
+                }
+            });
+        }else {
+            alert("Форма заполнена не корректно")
+        }
+    };
+
+    $scope.createConsultation = function (consultationDate, consultationTime, consultationSymptoms) {
+        if (isValidConsultation(consultationDate, consultationTime, consultationSymptoms)) {
+            $http({
+                method: 'POST',
+                url: 'http://localhost:8080/addConsultation',
+                headers: {'Content-Type': 'application/json'},
+                data: ({
+                    'date': consultationDate,
+                    'time': consultationTime.valueOf(),
+                    'symptoms': consultationSymptoms,
+                    'patient': {
+                        'id': selectedPatient
+                    }
+                })
+
+            }).then(function (result) {
+                if (result.data === true) {
+                    $http.get('http://localhost:8080/getConsultations?id=' + selectedPatient).then(function (consultations) {
+                        $scope.consultations = consultations.data;
+                    });
+                    $scope.createConsultationModalShown = false;
+                    alert("Консультация добавлена")
+                } else {
+                    alert("Форма заполнена не корректно");
+                }
+            });
+        }else {
+            alert("Форма заполнена не корректно")
+        }
+    };
+
+    $scope.deletePatient = function () {
         $http({
             method: 'POST',
             url: 'http://localhost:8080/deletePatient',
@@ -94,9 +168,32 @@ app.controller("consultationsController", function ($scope, $http) {
         });
     };
 
+    $scope.deleteConsultation = function () {
+        $http({
+            method: 'POST',
+            url: 'http://localhost:8080/deleteConsultation',
+            headers: {'Content-Type': 'application/json'},
+            data: ({
+                'id': selectedConsultation
+            })
+        }).then(function (result) {
+            if (result.data === true) {
+                $http.get('http://localhost:8080/getConsultations?id=' + selectedPatient).then(function (consultations) {
+                    $scope.consultations = consultations.data;
+                });
+                alert("Пациент успешно удален");
+                document.getElementById(selectedConsultation).classList.remove('selected_patient');
+                $scope.disabledConsultationButtons = true;
+                selectedConsultation = null;
+            } else {
+                alert("Произошла ошибка, пациент не удален");
+            }
+        });
+    };
+
     $scope.editModal = function () {
-        $scope.modalEditShown = !$scope.modalEditShown;
-        $http.get('http://localhost:8080/editPatient?id=' + selectedPatient).then(function (patient) {
+        $scope.editModalShown = !$scope.editModalShown;
+        $http.get('http://localhost:8080/getPatient?id=' + selectedPatient).then(function (patient) {
             $scope.editName = patient.data.name;
             $scope.editLastName = patient.data.lastName;
             $scope.editMiddleName = patient.data.middleName;
@@ -106,8 +203,37 @@ app.controller("consultationsController", function ($scope, $http) {
         });
     };
 
+    $scope.editConsultationModal = function () {
+        $scope.editConsultationModalShown = !$scope.editConsultationModalShown;
+        $http.get('http://localhost:8080/getConsultation?id=' + selectedConsultation).then(function (consultation) {
+            $scope.consultationEditDate = new Date(consultation.data.date);
+            $scope.consultationEditTime = new Date("1970-01-01T"+consultation.data.time);
+            $scope.consultationEditSymptoms = consultation.data.symptoms;
+        });
+    };
+
+    $scope.openModal = function () {
+        $scope.openModalShown = !$scope.openModalShown;
+        $http.get('http://localhost:8080/getPatient?id=' + selectedPatient).then(function (patient) {
+            $scope.openId = patient.data.id;
+            $scope.openName = patient.data.name;
+            $scope.openLastName = patient.data.lastName;
+            $scope.openMiddleName = patient.data.middleName;
+            $scope.openDate = patient.data.dateOfBirth;
+            $scope.openGender = patient.data.gender;
+            $scope.openSocialSecurityNumber = patient.data.socialSecurityNumber;
+            $http.get('http://localhost:8080/getConsultations?id=' + selectedPatient).then(function (consultations) {
+                $scope.consultations = consultations.data;
+            });
+        });
+    };
+
     $scope.createModal = function () {
         $scope.createModalShown = !$scope.createModalShown;
+    };
+
+    $scope.createConsultationModal = function () {
+        $scope.createConsultationModalShown = !$scope.createConsultationModalShown;
     };
 
     $scope.clickPatient = function (id) {
@@ -122,6 +248,21 @@ app.controller("consultationsController", function ($scope, $http) {
             selectedPatient = id;
             document.getElementById(id).classList.add('selected_patient');
             $scope.disabledPatientButtons = false;
+        }
+    };
+
+    $scope.clickConsultation = function (id) {
+        if (selectedConsultation != null) {
+            document.getElementById(selectedConsultation).classList.remove('selected_patient');
+        }
+        if (id === selectedConsultation) {
+            document.getElementById(selectedConsultation).classList.remove('selected_patient');
+            $scope.disabledConsultationButtons = true;
+            selectedConsultation = null;
+        } else {
+            selectedConsultation = id;
+            document.getElementById(id).classList.add('selected_patient');
+            $scope.disabledConsultationButtons = false;
         }
     };
 
@@ -174,6 +315,18 @@ app.controller("consultationsController", function ($scope, $http) {
             return false;
         }
     };
+
+    let isValidConsultation = function (consultationDate, consultationTime, consultationSymptoms) {
+        if (consultationDate !== null) {
+            if (consultationTime !== null) {
+                return true;
+            } else {
+                alert("Введено не корректное время");
+            }
+        } else {
+            alert("Введена не корректная дата")
+        }
+    }
 
 });
 

@@ -1,8 +1,9 @@
 package com.example.consultations.entity;
 
 import javax.persistence.*;
-import java.time.LocalTime;
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 @Entity
@@ -13,19 +14,15 @@ public class Consultation {
 
     private Date date;
 
-    private LocalTime time;
+    private Time time;
 
     private String symptoms;
 
-    @ManyToOne(optional = false,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     public Consultation() {
-    }
-
-    public Consultation(Date date, LocalTime time) {
-        this.date = date;
-        this.time = time;
     }
 
     public Date getDate() {
@@ -36,11 +33,11 @@ public class Consultation {
         this.date = date;
     }
 
-    public LocalTime getTime() {
+    public Time getTime() {
         return time;
     }
 
-    public void setTime(LocalTime time) {
+    public void setTime(Time time) {
         this.time = time;
     }
 
@@ -50,6 +47,18 @@ public class Consultation {
 
     public void setSymptoms(String symptoms) {
         this.symptoms = symptoms;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override
@@ -64,5 +73,9 @@ public class Consultation {
     @Override
     public int hashCode() {
         return Objects.hash(date, time);
+    }
+
+    public boolean validConsultation() {
+        return this.date!=null&&this.time!=null;
     }
 }
