@@ -1,6 +1,8 @@
 var app = angular.module("consultations", []);
 app.controller("consultationsController", function ($scope, $http) {
 
+    $scope.typeSearch = "Фио";
+
     $scope.patients = [];
 
     $scope.consultations = [];
@@ -26,6 +28,21 @@ app.controller("consultationsController", function ($scope, $http) {
     $http.get('http://localhost:8080/getAllPatients').then(function (patients) {
         $scope.patients = patients.data;
     });
+
+    $scope.mySearch = function(patient){
+        if ($scope.searchText==null||$scope.searchText===""){
+            return true;
+        }else {
+            let searchRegx = new RegExp("^"+$scope.searchText, "i");
+            if($scope.typeSearch==="Фио") {
+                return searchRegx.test(patient.name)||searchRegx.test(patient.lastName)||searchRegx.test(patient.middleName);
+            }else if ($scope.typeSearch==="Снилс") {
+                return searchRegx.test(patient.socialSecurityNumber);
+            }else {
+                return false;
+            }
+        }
+    };
 
     $scope.createPatient = function (name, lastName, middleName, date, gender, socialSecurityNumber) {
         if (isValidPatient(name, lastName, middleName, date, gender, socialSecurityNumber)) {

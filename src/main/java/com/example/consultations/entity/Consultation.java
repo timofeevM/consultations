@@ -33,8 +33,9 @@ public class Consultation {
         this.date = date;
     }
 
-    public Time getTime() {
-        return time;
+    public String getTime() {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        return timeFormat.format(time);
     }
 
     public void setTime(Time time) {

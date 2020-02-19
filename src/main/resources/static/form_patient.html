@@ -19,6 +19,13 @@
     <button class="btn btn-light btn-sm button_menu" ng-disabled="disabledPatientButtons" ng-click="deletePatient()">
         Удалить
     </button>
+    <div id="searchDiv">
+        <select id="searchSelect" ng-model="typeSearch" class="form-control">
+            <option>Фио</option>
+            <option>Снилс</option>
+        </select>
+        <input type="text" placeholder="Поиск...." id="searchText" ng-model="searchText" class="form-control">
+    </div>
 </div>
 <div id="divTable">
     <div class="border rounded" id="table">
@@ -34,11 +41,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in patients" class="patient_table_row" ng-click="clickPatient(item.id)" id="{{item.id}}">
+            <tr ng-repeat="item in patients | filter:mySearch" class="patient_table_row" ng-click="clickPatient(item.id)" id="{{item.id}}">
                 <th class="patient_table_item">{{item.lastName}}</th>
                 <th class="patient_table_item">{{item.name}}</th>
                 <th class="patient_table_item">{{item.middleName}}</th>
-                <th class="patient_table_item">{{item.dateOfBirth}}</th>
+                <th class="patient_table_item">{{item.dateOfBirth | date:'dd.MM.yyyy'}}</th>
                 <th class="patient_table_item">{{item.gender}}</th>
                 <th class="patient_table_item">{{item.socialSecurityNumber}}</th>
             </tr>
@@ -126,7 +133,7 @@
 
             </div>
             <div class="open_modal_div_label">
-                <label><b>Дата рождения:</b> {{openDate}}</label>
+                <label><b>Дата рождения:</b> {{openDate | date:'dd.MM.yyyy'}}</label>
                 <label><b>Пол:</b> {{openGender}}</label>
                 <label><b>Cнилс:</b> {{openSocialSecurityNumber}}</label>
             </div>
@@ -157,8 +164,8 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="consultation in consultations" id="{{consultation.id}}" ng-click="clickConsultation(consultation.id)" class="patient_table_row">
-                        <th class="patient_table_item">{{consultation.date}}</th>
-                        <th class="patient_table_item">{{consultation.time}}</th>
+                        <th class="patient_table_item">{{consultation.date | date:'dd.MM.yyyy'}}</th>
+                        <th class="patient_table_item">{{consultation.time | date:'HH:mm'}}</th>
                         <th class="patient_table_item">{{consultation.symptoms}}</th>
                     </tr>
                     </tbody>
