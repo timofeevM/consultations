@@ -20,7 +20,11 @@ public class DeletePatientController {
         Patient deletePatient = patientService.getPatientById(patient.getId());
         if (deletePatient != null) {
             consultationService.deleteAll(consultationService.getConsultationsByPatient(deletePatient));
-            patientService.deletePatient(patient);
+            try{
+                patientService.deletePatient(patient);
+            }catch (Exception e){
+                return false;
+            }
             return true;
         } else {
             return false;
