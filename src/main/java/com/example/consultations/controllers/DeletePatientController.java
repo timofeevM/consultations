@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
+
 @RestController
 public class DeletePatientController {
     @Autowired
@@ -22,7 +24,7 @@ public class DeletePatientController {
             consultationService.deleteAll(consultationService.getConsultationsByPatient(deletePatient));
             try{
                 patientService.deletePatient(patient);
-            }catch (Exception e){
+            }catch (SQLException e){
                 return false;
             }
             return true;

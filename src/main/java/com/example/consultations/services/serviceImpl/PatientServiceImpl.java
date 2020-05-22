@@ -6,6 +6,7 @@ import com.example.consultations.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -29,7 +30,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void deletePatient(Patient patient) {
+    public void deletePatient(Patient patient) throws SQLException {
         patientDao.delete(patient);
     }
 
